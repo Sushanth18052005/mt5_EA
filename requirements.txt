@@ -1,0 +1,37 @@
+# Core FastAPI dependencies
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+python-multipart
+
+# Security & Authentication
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt==4.0.1
+
+# Database
+pymongo
+motor
+
+# Configuration & Environment
+python-dotenv
+
+# HTTP Client
+httpx
+aiohttp
+
+# Task Scheduling
+APScheduler
+
+# SMS & Communication Services
+twilio
+
+# Email
+jinja2
+
+# Additional pydantic features
+pydantic[email]
+
+# Other utilities
+requests
