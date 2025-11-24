@@ -6,7 +6,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer
 from contextlib import asynccontextmanager
 from backend.core.config import settings
-import os
 from backend.core.database import connect_to_mongo, close_mongo_connection
 
 # Import ALL routers
@@ -138,12 +137,10 @@ async def list_endpoints():
 
 if __name__ == "__main__":
     import uvicorn
-    # Allow override via environment variable PORT, default to 8080 for deployments that require it
-    port = int(os.environ.get("PORT", "8080"))
     uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        port=port,
+        "main:app", 
+        host="0.0.0.0", 
+        port=8000, 
         reload=True if settings.DEBUG else False,
-        workers=1,
+        workers=1
     )
