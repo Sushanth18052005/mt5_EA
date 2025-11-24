@@ -33,6 +33,7 @@ from backend.api import (
     all_masters     # NEW: All masters listing endpoint
 )
 from backend.api import all_slaves
+from backend.api import slave_add
 
 # Initialize security
 security = HTTPBearer()
@@ -41,11 +42,12 @@ security = HTTPBearer()
 async def lifespan(app: FastAPI):
     # Startup
     await connect_to_mongo()
-    print("🚀 MT5 Copy Trading API Started")
+    # Avoid printing emojis which can cause UnicodeEncodeError on some Windows consoles
+    print("MT5 Copy Trading API Started")
     yield
     # Shutdown
     await close_mongo_connection()
-    print("🛑 MT5 Copy Trading API Stopped")
+    print("MT5 Copy Trading API Stopped")
 
 # Create FastAPI app
 app = FastAPI(
@@ -92,6 +94,7 @@ app.include_router(master_login.router, tags=["Master Login"])
 app.include_router(master_delete.router, tags=["Master Delete"])  # NEW: Master delete endpoint
 app.include_router(master_status.router, tags=["Master Status"])
 app.include_router(all_slaves.router, tags=["All Slaves"])
+app.include_router(slave_add.router, tags=["Slave Add"])
 app.include_router(registration.router, tags=["Registration"])
 app.include_router(user_panel.router, tags=["User Panel"])
 app.include_router(group_panel.router, tags=["Group Panel"])

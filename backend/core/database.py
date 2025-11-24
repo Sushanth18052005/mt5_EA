@@ -12,7 +12,7 @@ database = None
 async def connect_to_mongo():
     global client, database
     try:
-        print("🔄 Attempting to connect to MongoDB...")
+        print("Attempting to connect to MongoDB...")
 
         # Use motor for async MongoDB operations
         client = AsyncIOMotorClient(
@@ -29,20 +29,20 @@ async def connect_to_mongo():
 
         # Test connection
         await client.admin.command('ping')
-        print("✅ Successfully connected to MongoDB!")
+        print("Successfully connected to MongoDB")
 
         # Create indexes for better performance
         await setup_indexes()
-        print("🔧 Database indexes created successfully")
+        print("Database indexes created successfully")
 
     except ServerSelectionTimeoutError as e:
-        print(f"❌ MongoDB connection timeout: {e}")
-        print("🔄 Server will start without database (will retry connections on requests)")
+        print(f"MongoDB connection timeout: {e}")
+        print("Server will start without database (will retry connections on requests)")
         client = None
         database = None
     except Exception as e:
-        print(f"❌ MongoDB connection failed: {e}")
-        print("🔄 Server will start without database (will retry connections on requests)")
+        print(f"MongoDB connection failed: {e}")
+        print("Server will start without database (will retry connections on requests)")
         client = None
         database = None
 
@@ -62,13 +62,13 @@ async def setup_indexes():
             await database.otp_records.create_index("mobile_or_email")
             await database.otp_records.create_index("expires_at")
         except Exception as e:
-            print(f"⚠️ Index creation failed (might already exist): {e}")
+            print(f"Index creation failed (might already exist): {e}")
 
 async def close_mongo_connection():
     global client
     if client:
         client.close()
-        print("🔌 MongoDB connection closed")
+        print("MongoDB connection closed")
 
 def get_database():
     return database
