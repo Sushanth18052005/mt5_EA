@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 class StatusMasterRequest(BaseModel):
-    trade_id: int = Field(..., description="Unique identifier for the master trader")
+    trade_id: str = Field(..., description="Unique identifier for the master trader")
     status: bool = Field(..., description="Master status (true = active, false = inactive)")
 
 

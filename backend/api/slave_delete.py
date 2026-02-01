@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 class DeleteSlaveRequest(BaseModel):
-    slave_id: int = Field(..., gt=0, description="Unique identifier of the slave trader to delete")
+    slave_id: str = Field(..., description="Unique identifier of the slave trader to delete")
 
 
 @router.delete("/api/slave-delete")

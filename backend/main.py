@@ -34,6 +34,8 @@ from backend.api import (
 )
 from backend.api import all_slaves
 from backend.api import slave_add
+from backend.api import slave_delete
+from backend.api import slave_login
 
 # Initialize security
 security = HTTPBearer()
@@ -95,6 +97,8 @@ app.include_router(master_delete.router, tags=["Master Delete"])  # NEW: Master 
 app.include_router(master_status.router, tags=["Master Status"])
 app.include_router(all_slaves.router, tags=["All Slaves"])
 app.include_router(slave_add.router, tags=["Slave Add"])
+app.include_router(slave_delete.router, tags=["Slave Delete"])
+app.include_router(slave_login.router, tags=["Slave Login"])
 app.include_router(registration.router, tags=["Registration"])
 app.include_router(user_panel.router, tags=["User Panel"])
 app.include_router(group_panel.router, tags=["Group Panel"])

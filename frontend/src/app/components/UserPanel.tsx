@@ -79,7 +79,7 @@ export default function UserPanel({ onLogout }: UserPanelProps) {
   const [eaStatus, setEaStatus] = useState<'active' | 'stopped'>('active');
   const [loading, setLoading] = useState(false);
   const [eaLoading, setEaLoading] = useState(false);
-  const [notification, setNotification] = useState<{type: 'success' | 'error' | 'info', message: string} | null>(null);
+  const [notification, setNotification] = useState<{ type: 'success' | 'error' | 'info', message: string } | null>(null);
   // Groups that user can join
   const [availableGroups, setAvailableGroups] = useState<GroupSummary[]>([]);
   const [joining, setJoining] = useState(false);
@@ -116,7 +116,7 @@ export default function UserPanel({ onLogout }: UserPanelProps) {
         return;
       }
 
-  const response = await fetch(`${API_BASE_URL}/api/v1/group/trading-controls`, {
+      const response = await fetch(`${API_BASE_URL}/api/v1/group/trading-controls`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ export default function UserPanel({ onLogout }: UserPanelProps) {
       if (savedStatus) setEaStatus(savedStatus);
     }
   };
-  
+
   // Toggle EA status with backend API
   const toggleEAStatus = async () => {
     if (eaLoading) return;
@@ -166,7 +166,7 @@ export default function UserPanel({ onLogout }: UserPanelProps) {
         throw new Error('Authentication token not found');
       }
 
-  const response = await fetch(`${API_BASE_URL}/api/v1/group/trading-controls/toggle`, {
+      const response = await fetch(`${API_BASE_URL}/api/v1/group/trading-controls/toggle`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -219,10 +219,10 @@ export default function UserPanel({ onLogout }: UserPanelProps) {
           return;
         }
 
-  const user = JSON.parse(userData);
+        const user = JSON.parse(userData);
 
         // Fetch user dashboard data
-        const response = await fetch(`${API_URL}/api/v1/users/${user.id}/dashboard`, {
+        const response = await fetch(`${API_URL}/api/v1/user/dashboard`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -316,11 +316,11 @@ export default function UserPanel({ onLogout }: UserPanelProps) {
 
         if (!token || !userData) return;
 
-  const user = JSON.parse(userData);
+        const user = JSON.parse(userData);
 
         // Fetch trading accounts
         try {
-          const accountsResponse = await fetch(`${API_URL}/api/v1/users/${user.id}/accounts`, {
+          const accountsResponse = await fetch(`${API_URL}/api/v1/user/accounts`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -493,7 +493,7 @@ export default function UserPanel({ onLogout }: UserPanelProps) {
         state: profileStateField
       };
 
-      const res = await fetch(`${API_URL}/api/v1/users/profile`, {
+      const res = await fetch(`${API_URL}/api/v1/user/profile`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -507,7 +507,7 @@ export default function UserPanel({ onLogout }: UserPanelProps) {
         if (userData) {
           const user = JSON.parse(userData);
           // fetch dashboard again
-          const r = await fetch(`${API_URL}/api/v1/users/${user.id}/dashboard`, { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } });
+          const r = await fetch(`${API_URL}/api/v1/user/dashboard`, { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } });
           if (r.ok) {
             const d = await r.json();
             if (d.success && d.data) setDashboardData(d.data);
@@ -771,15 +771,15 @@ export default function UserPanel({ onLogout }: UserPanelProps) {
                 </span>
               </span>
             </div>
-              {/** Show total as number of approved accounts for clarity */}
-              <div style={{ fontSize: '12px', color: '#6b7280' }}>
-                {accounts.filter(acc => acc.status === 'approved').length} Accounts • {accounts.filter(acc => acc.status === 'approved').length} Active
-                <div style={{ marginTop: '6px', fontSize: '13px' }}>
-                  {eaStatus === 'active'
-                    ? 'EA is running and copying trades from Professional Traders'
-                    : 'EA is stopped - no new trades will be copied'}
-                </div>
+            {/** Show total as number of approved accounts for clarity */}
+            <div style={{ fontSize: '12px', color: '#6b7280' }}>
+              {accounts.filter(acc => acc.status === 'approved').length} Accounts • {accounts.filter(acc => acc.status === 'approved').length} Active
+              <div style={{ marginTop: '6px', fontSize: '13px' }}>
+                {eaStatus === 'active'
+                  ? 'EA is running and copying trades from Professional Traders'
+                  : 'EA is stopped - no new trades will be copied'}
               </div>
+            </div>
           </div>
           <button
             className={`btn ${eaStatus === 'active' ? 'btn-outline' : 'btn-primary'}`}
@@ -1752,9 +1752,9 @@ export default function UserPanel({ onLogout }: UserPanelProps) {
     if (!notification) return null;
 
     const bgColor = notification.type === 'success' ? '#dcfce7' :
-                   notification.type === 'error' ? '#fef2f2' : '#eff6ff';
+      notification.type === 'error' ? '#fef2f2' : '#eff6ff';
     const textColor = notification.type === 'success' ? '#166534' :
-                     notification.type === 'error' ? '#dc2626' : '#1d4ed8';
+      notification.type === 'error' ? '#dc2626' : '#1d4ed8';
 
     return (
       <div style={{
@@ -1769,7 +1769,7 @@ export default function UserPanel({ onLogout }: UserPanelProps) {
         zIndex: 10000,
         maxWidth: '400px',
         border: `1px solid ${notification.type === 'success' ? '#bbf7d0' :
-                              notification.type === 'error' ? '#fecaca' : '#bfdbfe'}`
+          notification.type === 'error' ? '#fecaca' : '#bfdbfe'}`
       }}>
         {notification.message}
       </div>
