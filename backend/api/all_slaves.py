@@ -29,19 +29,14 @@ async def get_all_slaves(
         if not (len(restricted) == 0 or "0" in restricted):
             if client_ip not in restricted:
                 raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="This IP is not allowed to access this API")
-        # Default to listing regular members unless a role is provided
+        # Query slave_traders collection
         query = {}
-        if role:
-            query["role"] = role
-        else:
-            query["role"] = "member"
-
-        # Exclude deleted users
-        query["status"] = {"$ne": "deleted"} if not status else status
+        if status:
+            query["status"] = status
 
         result = fetch_documents(
             settings.DATABASE_NAME,
-            "users",
+            "slave_traders",
             query,
             sort=[("created_at", -1)]
         )
@@ -51,8 +46,8 @@ async def get_all_slaves(
 
         users = result.get("data", [])
 
-        # Clean sensitive fields
-        cleaned = [user_service.clean_user_data(u) for u in users]
+        # No cleaning needed for now, or implement slave specific cleaning
+        cleaned = users
 
         # Log admin access (admin_id=0 for system-level)
         try:

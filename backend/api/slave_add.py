@@ -17,7 +17,7 @@ class SlaveTraderCreate(BaseModel):
     status: bool = True
     start_date: date
     end_date: date
-    master_id: int
+    master_id: str
     master_email: EmailStr
 
 
@@ -126,7 +126,11 @@ async def slave_add(request: Request, payload: SlaveTraderCreate):
         except Exception:
             pass
 
-        return {"status": "success", "message": f"Slave trader '{payload.name}' added successfully"}
+        return {
+            "status": "success", 
+            "message": f"Slave trader '{payload.name}' added successfully",
+            "data": {"slave_id": slave_record["slave_id"]}
+        }
 
     except HTTPException:
         raise

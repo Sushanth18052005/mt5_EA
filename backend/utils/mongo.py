@@ -21,7 +21,9 @@ def convert_objectid_to_str(document):
                         convert_objectid_to_str(item)
     return document
 
-uri = "mongodb+srv://kapardhikannekanti_db_user:3XoNc2gtr9lGY4oi@mt5-cluster.njyntuk.mongodb.net/?retryWrites=true&w=majority&appName=mt5-cluster"
+from backend.core.config import settings
+
+uri = settings.MONGODB_URL
 
 def insert_document(database_name: str, collection_name: str, document: Dict[str, Any]) -> Dict[str, Any]:
     """
